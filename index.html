@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #msgForm { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      #msgForm input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #msgForm button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form id = "msgForm" action="">
+      <input id="msg" placeholder="Send a message to all users" autocomplete="off" /><button>Send</button>
+    </form>
+    <button id = "joinSports">Join Sports</button>
+    <button id = "leaveSports" style="display:none">Leave Sports</button>
+    <button id = "joinMovies">Join Movies</button>
+    <button id = "leaveMovies" style="display:none">Leave Movies</button>
+
+    <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script>
+        var socket = io(); 
+        //load socket.io-client, which exposes global io objecct
+        //note no URL specified: it defaults to connecting to host serving page
+        
+        
+
+        $("#msgForm").submit(function(){
+          var data = {
+            msg : $("#msg").val()
+          }
+            socket.emit("chatMessage", data);
+            $("#msg").val('');
+            return false;
+        })
+        
+        socket.on("chatMessage", function(msg){
+             $('#messages').append($('<li>').text(msg));
+        })
+      
+        $("#joinSports").click(function(){
+          socket.emit("joinSports");
+          $("#joinSports").hide();
+          $("#leaveSports").show();
+        })
+        
+        $("#leaveSports").click(function(){
+          socket.emit("leaveSports");
+          $("#leaveSports").hide();
+          $("#joinSports").show();
+        })
+        
+        $("#joinMovies").click(function(){
+          socket.emit("joinMovies");
+          $("#joinMovies").hide();
+          $("#leaveMovies").show();
+        })
+        $("#leaveMovies").click(function(){
+          socket.emit("leaveMovies");
+          $("#leaveMovies").hide();
+          $("#joinMovies").show();
+        })
+    </script>
+  </body>
+</html>

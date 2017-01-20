@@ -1,0 +1,16 @@
+{
+  "name": "dio-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Neeilan Selvalingam <neeilans@live.com>",
+  "license": "ISC",
+  "dependencies": {
+    "domain.io": "^1.0.1",
+    "express": "^4.14.0",
+    "socket.io": "^1.7.2"
+  }
+}
